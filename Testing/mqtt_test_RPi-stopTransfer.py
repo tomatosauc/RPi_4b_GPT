@@ -5,7 +5,6 @@ def on_connect(client, userdata, flags, reason_code, properties):
     print(f"Connected with result code {reason_code}")
     # Subscribing in on_connect() means that if we lose the connection and
     # reconnect then subscriptions will be renewed.
-    client.subscribe("$SYS/#")
 
 # The callback for when a PUBLISH message is received from the server.
 def on_message(client, userdata, msg):
@@ -15,7 +14,7 @@ mqttc = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2)
 mqttc.on_connect = on_connect
 mqttc.on_message = on_message
 
-mqttc.connect("192.168.0.69", 1883, 60)
+mqttc.connect("192.168.1.177", 1883, 60)
 
 # Blocking call that processes network traffic, dispatches callbacks and
 # handles reconnecting.
@@ -23,6 +22,7 @@ mqttc.connect("192.168.0.69", 1883, 60)
 # manual interface.
 mqttc.loop_start()
 
-mqttm = mqttc.publish("test", "test")
+mqttm = mqttc.publish("stop", "stop")
 mqttm.wait_for_publish(timeout=10)
+
 mqttc.loop_stop()
